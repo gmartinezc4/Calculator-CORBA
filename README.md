@@ -1,17 +1,17 @@
 # Calculator-CORBA
-A distributed calculator using CORBA architecture.
-Please see the root folder for the project description.
+Una calculadora distribuida que utiliza la arquitectura CORBA.
+Consulte la carpeta raíz para ver la descripción del proyecto.
 
-## How to Compile
-### Server Side
+## Como compilar
+### Lado del servidor
 idlj Calc.idl
 javac *.java Calculator/*.java
 
-### Client Side
+### Lado del Cliente
 javac *.java Calculator/*.java
 
-## How to Run
-You will need to open three terminal windows.
+## Como correr el programa
+Necesitaras tres terminales.
 
 Terminal 1:
 orbd -ORBInitialPort 1050 -ORBInitialHost localhost
