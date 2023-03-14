@@ -12,7 +12,7 @@ public abstract class CalcPOA extends org.omg.PortableServer.Servant
  implements Calculator.CalcOperations, org.omg.CORBA.portable.InvokeHandler
 {
 
-  // Constructors
+  // Constructores
 
   private static java.util.Hashtable _methods = new java.util.Hashtable ();
   static
@@ -58,7 +58,7 @@ public abstract class CalcPOA extends org.omg.PortableServer.Servant
     return out;
   } // _invoke
 
-  // Type-specific CORBA::Object operations
+  // Operaciones especificas de tipo CORBA::Object 
   private static String[] __ids = {
     "IDL:Calculator/Calc:1.0"};
 

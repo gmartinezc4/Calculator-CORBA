@@ -19,36 +19,36 @@ public class StartServer {
  
     public static void main(String args[]) {
         try{
-            // create and initialize the ORB
+            // crear e inicializar el ORB
             ORB orb = ORB.init(args, null);  
             
-            // get reference to rootpoa & activate the POAManager
+            // obtener referencia a rootpoa y activar el POAManager
             POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootpoa.the_POAManager().activate();
  
-            // create servant and register it with the ORB
+            // crear servidor y registrarlo en el ORB
             CalcObject calcObj = new CalcObject();
             calcObj.setORB(orb); 
  
-            // get object reference from the servant
+            // obtener la referencia del objeto del servidor
             org.omg.CORBA.Object ref = rootpoa.servant_to_reference(calcObj);
             Calc href = CalcHelper.narrow(ref);
  
-            // get the root naming context
-            // NameService invokes the name service
+            // Obtener el contexto de root naming 
+            // NameService invoca el name service
             org.omg.CORBA.Object nsRef =  orb.resolve_initial_references("NameService");
             
-            // Use NamingContextExt which is part of the Interoperable
-            // Naming Service (INS) specification.
+            // Utilice NamingContextExt, que es parte de Interoperable
+            // Especificación del Servicio de Nombres (INS).
             NamingContextExt ncRef = NamingContextExtHelper.narrow(nsRef);
  
-            // bind the Object Reference in Naming
+            // vincular la referencia de objeto en la denominación
             NameComponent path[] = ncRef.to_name("Calculator");
             ncRef.rebind(path, href);
  
             System.out.println("CalculatorServer is listening...");
  
-            // wait for invocations from clients
+            // esperar las invocaciones de los clientes
             orb.run();
             System.out.println("I am out");
         } 

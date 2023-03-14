@@ -21,34 +21,34 @@ public class StartClient {
      */
     public static void main(String[] args) {
         try {
-            // create and initialize the ORB
+            // crear e inicializar el ORB
 	    ORB orb = ORB.init(args, null);
             
-            // get the root naming context
+            // Obtener el contexto de root naming 
 	    org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
             
-            // Use NamingContextExt instead of NamingContext. This is 
-            // part of the Interoperable naming Service. 
+            // Utilizar NamingContextExt en lugar de NamingContext. Esto es 
+            // parte del Servicio de Nomenclatura Interoperable. 
 	    NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
             
-            // resolve the Object Reference in Naming
+            // resolver la referencia de objeto en Naming
 	    calcObj = (Calc) CalcHelper.narrow(ncRef.resolve_str("Calculator"));
 
             while(true) {
-                // asking for input and read it
+                // preguntar por el input y leerlo
                 System.out.println("------------------------------------------");
                 System.out.println("Enter the parameters in this format [operator][sp][operand1][sp][operand2]."
                         + "\nFor example: + 1 2");
                 Scanner c=new Scanner(System.in);
 		String input = c.nextLine();
                 
-                // if the command is exit, request the server to shutdown
+                // si el comando es exit, pedir al servidor que se apague
                 if (input.toLowerCase().equals("exit")) {
                     calcObj.exit();
                     break;
                 }
                 
-                // test the input
+                // probar el input
                 String[] inputParams = input.split(" ");
                 if (inputParams.length != 3) {
                     System.out.println("Client Exception: Wrong number of parameters. Try again...");
@@ -58,7 +58,7 @@ public class StartClient {
                 int operand1;
                 int operand2;
                 
-                // set calculation type
+                // establecer el tipo de operación
                 if (inputParams[0].equals("+")) {
                     operatorCode = 1;
                 }
@@ -71,12 +71,16 @@ public class StartClient {
                 else if (inputParams[0].equals("/")) {
                     operatorCode = 4;
                 }
+                //operación nueva, potencias      
+                else if (inputParams[0].equals("E")) {
+                	operatorCode = 5;
+                }
                 else {
                     System.out.println("Client Exception: Un-recognized operation code. Try again...");
                     continue;
                 }
                 
-                // test input operands are integers
+                // Probar si los operandos de entrada son números enteros
                 try {
                     operand1 = Integer.parseInt(inputParams[1]);
                     operand2 = Integer.parseInt(inputParams[2]);
@@ -86,13 +90,13 @@ public class StartClient {
                     continue;
                 }
                 
-                // check if it is divided by zero
+                // probar si es dividido por 0
                 if (operatorCode == 4 && operand2 == 0) {
                     System.out.println("Client Exception: Can't be divided by zero. Try again...");
                     continue;
                 }
                 
-                // do the calculation and return result
+                // hacer el calculo y devolver el resultado 
 		int result = calcObj.calculate(operatorCode, operand1, operand2);
                 String resultDisplay = "";
                 if (result == Integer.MAX_VALUE) {

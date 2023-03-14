@@ -37,8 +37,12 @@ public class CalcObject extends CalcPOA{
         else if (type == 3) {
             result = (long) a * b;
         }
-        else{
+        else if (type == 4) {
             result = (long) a / b;
+        }
+        // Nueva operación, potencias        
+        else {
+        	result = (long) Math.pow(a, b);
         }
         
         if (result >= Integer.MAX_VALUE) {
